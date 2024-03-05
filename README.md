@@ -18,9 +18,9 @@
 
 #  Objetivos
 
-- `Objetivo 1`: Investigar e catalogar os principais chatbots existentes
-- `Objetivo 2`: Avaliar a eficácia dos chatbots catalogados na explicação dos conceitos básicos de programação
-- `Objetivo 3`: Investigar como os chatbots se comportam durante a resolução de problemas de programação pelos alunos, analisando pontos fortes e pontos fracos
+- `Objetivo 1`: Investigar e catalogar os principais chatbots existentes.
+- `Objetivo 2`: Avaliar a eficácia dos chatbots catalogados na explicação dos conceitos básicos de programação.
+- `Objetivo 3`: Investigar como os chatbots se comportam durante a resolução de problemas de programação pelos alunos, analisando pontos fortes e pontos fracos.
 - `Objetivo 4`: Investigar a existência de uma API, que permita a comunicação entre o chatbot e uma linguagem para testar o potencial de criar novas aplicações a partir do chatbot.
 
 ## Autores
