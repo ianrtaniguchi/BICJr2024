@@ -52,9 +52,7 @@ comuns e atuando de forma a dar a impressão de ser um humano interagindo”(pá
 
  ● Aplicações: Qualquer aplicação que use dados sequenciais de textos, imagens ou vídeos é uma candidata a modelos transformer. Isso permite que esses modelos andem em um ciclo virtuoso na AI de transformers. Criados com grandes conjuntos de dados, os transformers fazem previsões precisas que impulsionam seu uso mais amplo, gerando mais dados que podem ser usados para criar modelos ainda melhores."(copilot)
 
-
 ## Referências
-
 
 [^1]: [What is a chatbot? (IBM)](https://www.ibm.com/topics/chatbots)  
 [What is a chatbot? (Forbes Advisor)](https://www.ibm.com/topics/chatbots)  
