@@ -1,3 +1,7 @@
+Um chatbot é um programa de computador projetado para simular uma conversa com seres humanos, especialmente pela internet. Eles podem ser usados para uma variedade de propósitos, como atendimento ao cliente, fornecimento de informações, entretenimento e assistência em tarefas específicas. 
+
+A arquitetura do ChatGPT: segue um modelo de processamento de linguagem natural (NLP) e aprendizado de máquina. O GPT (Generative Pre-trained Transformer) é uma arquitetura específica que utiliza uma rede neural para entender e gerar texto coerente em resposta a entradas de texto fornecidas pelo usuário. Esta arquitetura é treinada em uma enorme quantidade de dados textuais para aprender padrões de linguagem e contexto.
+
 Links chatbots:
 
 
