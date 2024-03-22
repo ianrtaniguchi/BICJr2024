@@ -20,3 +20,6 @@ Respostas além da pergunta fogem ao tema ou acrescentam? Em quais situações?
 
 Sim, ou não, há situações que o usuário precisa de uma resposta direta como um sim ou não, por exemplo: Para pedir uma informação sobre a população em um país, se o chatbot responder com dados como a procentagem de mulheres e homens, essa informação pode ser relevante, outrora, dados como população de outros países pode nao ser tão relevante, uma boa resposta deve cobrir essas necessidade e parâmetros.
 
+Como o ChatGPT pode ajudar em um negócio? Por exemplo o ChatGPT pode ajudar um hotel a fazer reservas 24 horas? Se sim, como faria para desenvolver esse mecanismo?
+
+O chatGPT pode contribuir em diversos tipos de negócio, seja na criação de legendas, textos para as postagens, e também pode influenciar de forma direta em um sistema, que é o caso do Asksuite. O Asksuite é um meio de fazer reservas em hotéis através de um chatbot, que até o ano de 2023 o sistema tinha apenas um chatbot de base própria, o ChatGPT foi integrado a esse sistema após 10 meses do seu lançamento, com a intenção de de tornar o sistema mais humanizado e com respostas melhores. Os meses de desenvolvimento foram para Conseguir limitar determinadas respostas através de algoritmos, já que as respostas são menos previsíveis. A integração do ChatGPT com algum sistema pode ser feita através de uma API.
