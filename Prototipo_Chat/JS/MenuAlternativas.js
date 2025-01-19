@@ -1,4 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
 
 import { res } from "./Chatbot.js";
 
@@ -19,7 +21,7 @@ async function run(mensagem) {
     inicio(mensagem);
 
     const generationConfig = {
-        temperature: 0.2,
+        temperature: 0.0,
   topP: 0.95,
   topK: 40,
   responseMimeType: "text/plain",
@@ -93,9 +95,17 @@ async function run(mensagem) {
     criarBotoes(opcoesBotoes);
 
     var resposta = await res(mensagem)
-    appendMessage("bot", resposta.text());
+    var respostaFormatada = formatText(await resposta.text());
+    appendMessage("bot", respostaFormatada);
 
 }
+
+function formatText(text) {
+    const formattedText = marked.parse(text); // Use marked.parse para converter Markdown para HTML
+     
+    return formattedText;
+   }
+
 
 function inicio(entrada) {
     appendMessage("user", entrada); // Adiciona a mensagem do usuário ao contêiner de respostas
@@ -107,13 +117,7 @@ function appendMessage(role, text) {
     messageElement.classList.add("chat-message");
     messageElement.classList.add(role === "user" ? "user-message" : "bot-message");
 
-    // Dividir a resposta em parágrafos
-    const paragraphs = text.split("\n");
-    paragraphs.forEach(paragraph => {
-        const paragraphElement = document.createElement("p");
-        paragraphElement.textContent = paragraph;
-        messageElement.appendChild(paragraphElement);
-    });
+    messageElement.innerHTML = text;
 
     chatContainer.appendChild(messageElement);
     chatContainer.scrollTop = chatContainer.scrollHeight; // Rolar para baixo automaticamente
