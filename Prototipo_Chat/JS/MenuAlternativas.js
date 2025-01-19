@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 
-import { res } from "./Chatbot.js";
+import { res } from "./GeradorRespostas.js";
 
 const userInputField = document.getElementById("user-input");
 const chatResponseField = document.getElementById("chat-response");
