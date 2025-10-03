@@ -1,146 +1,120 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
-
-
 import { res } from "./GeradorRespostas.js";
+import { API_KEY } from "./config.js";
 
-const userInputField = document.getElementById("user-input");
-const chatResponseField = document.getElementById("chat-response");
 const chatContainer = document.getElementById("chat-container");
-
-const MODEL_NAME = "gemini-1.5-pro";
-const API_KEY = "AIzaSyBjyQv0xO0ISBCkSuv0VfEVbU7MlEYoY-8";
+const MODEL_NAME = "gemini-2.5-flash";
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
-var x = "Menu Principal"
-run(x);
+const menuModel = genAI.getGenerativeModel({
+    model: MODEL_NAME,
+    systemInstruction: "Você deve funcionar como um assistente de opções, funcionando como um menu, o usuário fará uma requisição e você deve sugerir quatro novas, de acordo com seu treinamento, tudo isso sem mudar palavras do treinamento. Não crie respostas",
+});
+
+const menuChatSession = menuModel.startChat({ 
+    history: [
+        { role: "user", parts: [{ text: "Fluxo de seleção" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Fluxo de repetição" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Vetores" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Matriz" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Registro" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nApresente exemplos\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Função e Procedimento" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Menu Principal" }] },
+        { role: "model", parts: [{ text: "Defina fluxo de seleção\nDefina fluxo de repetição\nDefina vetores\nMais opções" }] },
+        { role: "user", parts: [{ text: "Mais opções" }] },
+        { role: "model", parts: [{ text: "Defina matriz\nDefina registro\nDefina Função e Procedimento\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Explique melhor" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Me dê um exemplo" }] },
+        { role: "model", parts: [{ text: "Apresente mais um exemplo\nExplique com mais detalhes esse exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Apresente mais um exemplo" }] },
+        { role: "model", parts: [{ text: "Apresente mais um exemplo\nExplique com mais detalhes esse exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Sugira exercícios" }] },
+        { role: "model", parts: [{ text: "Apresente mais exercícios\nMe dê um exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Me explique melhor o conteúdo" }] },
+        { role: "model", parts: [{ text: "Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Explique com mais detalhes esse exemplo" }] },
+        { role: "model", parts: [{ text: "Apresente mais um exemplo\nExplique com mais detalhes esse exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal" }] },
+        { role: "user", parts: [{ text: "Voltar ao menu principal" }] },
+        { role: "model", parts: [{ text: "Defina fluxo de seleção\nDefina fluxo de repetição\nDefina vetores\nMais opções" }] },
+    ]
+});
+
+run("Menu Principal");
 
 async function run(mensagem) {
     inicio(mensagem);
 
-    const generationConfig = {
-        temperature: 0.0,
-  topP: 0.95,
-  topK: 40,
-  responseMimeType: "text/plain",
-    };
+    const containerBotoes = document.getElementById("botoes");
+    containerBotoes.innerHTML = `
+        <div class="loader-container">
+            <div class="loader"></div>
+            <p class="loading-text">Tobby está pensando...</p>
+        </div>
+    `;
 
-    const parts = [
-        {text: "Você deve funcionar como um assistente de opções, funcionando como um menu, o usuário fará uma requisição e você deve sugerir quatro novas, de acordo com seu treinamento, tudo isso sem mudar palavras do treinamento. Não crie respostas"},
-    {text: "input: Fluxo de seleção"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Fluxo de repetição"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Vetores"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Matriz"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Registro"},
-    {text: "output: Explique melhor\nApresente exemplos\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Função e Procedimento"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Menu Principal"},
-    {text: "output: Defina fluxo de seleção\nDefina fluxo de repetição\nDefina vetores\nMais opções"},
-    {text: "input: Mais opções"},
-    {text: "output: Defina matriz\nDefina registro\nDefina Função e Procedimento\nVoltar ao menu principal"},
-    {text: "input: Explique melhor"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Me dê um exemplo"},
-    {text: "output: Apresente mais um exemplo\nExplique com mais detalhes esse exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal"},
-    {text: "input: Apresente mais um exemplo"},
-    {text: "output: Apresente mais um exemplo\nExplique com mais detalhes esse exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal"},
-    {text: "input: Sugira exercícios"},
-    {text: "output: Apresente mais exercícios\nMe dê um exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal"},
-    {text: "input: Me explique melhor o conteúdo"},
-    {text: "output: Explique melhor\nMe dê um exemplo\nSugira exercícios\nVoltar ao menu principal"},
-    {text: "input: Explique com mais detalhes esse exemplo"},
-    {text: "output: Apresente mais um exemplo\nExplique com mais detalhes esse exemplo\nMe explique melhor o conteúdo\nVoltar ao menu principal"},
-    {text: "input: Voltar ao menu principal"},
-    {text: "output: Defina fluxo de seleção\nDefina fluxo de repetição\nDefina vetores\nMais opções"},
+    try {
+        const menuPromise = menuChatSession.sendMessage(mensagem);
+        const respostaPromise = res(mensagem);
 
+        // Espera que AMBAS as promessas terminem (evita os botoes de aparecerem antes da resposta)
+        const [menuResult, respostaCompleta] = await Promise.all([menuPromise, respostaPromise]);
 
-        { text: "input: " + mensagem },
-        console.log(mensagem)
-    ];
+        // cria os botões
+        const menuResponse = menuResult.response;
+        const sugerir = menuResponse.text();
+        const opcoesBotoes = sugerir.split('\n').filter(opcao => opcao.trim() !== '');
+        criarBotoes(opcoesBotoes); // Isso vai remover o loader
 
+        // exibe a resposta de texto
+        if (respostaCompleta) {
+            const textoResposta = await respostaCompleta.text();
+            const respostaFormatada = formatText(textoResposta);
+            appendMessage("bot", respostaFormatada);
+        } else {
+             appendMessage("bot", "Desculpe, não consegui processar a resposta detalhada.");
+        }
 
-    const result = await model.generateContent({
-        contents: [{ role: "user", parts }],
-        generationConfig,
-    });
-
-    const response = result.response;
-    console.log(response.text());
-
-
-    const sugerir = response.text();
-
-    //Define as próximas opções
-    const frasesMenu = sugerir.split('\n');
-    console.log(frasesMenu);
-    const opcoesBotoes = frasesMenu.map(texto => ({ texto }));
-
-
-    const opcao1 = frasesMenu[0];
-    const opcao2 = frasesMenu[1];
-    const opcao3 = frasesMenu[2];
-    const opcao4 = frasesMenu[3];
-    console.log(opcao1);
-    console.log(opcao2);
-    console.log(opcao3);
-    console.log(opcao4);
-
-    criarBotoes(opcoesBotoes);
-
-    var resposta = await res(mensagem)
-    var respostaFormatada = formatText(await resposta.text());
-    appendMessage("bot", respostaFormatada);
-
+    } catch (error) {
+        console.error("Ocorreu um erro na API:", error);
+        appendMessage("bot", "Desculpe, ocorreu um erro na comunicação. Verifique o console.");
+        document.getElementById("botoes").innerHTML = ""; 
+    }
 }
 
 function formatText(text) {
-    const formattedText = marked.parse(text); // Use marked.parse para converter Markdown para HTML
-     
-    return formattedText;
-   }
-
+    return marked.parse(text);
+}
 
 function inicio(entrada) {
-    appendMessage("user", entrada); // Adiciona a mensagem do usuário ao contêiner de respostas
+    appendMessage("user", entrada);
 }
-;
 
 function appendMessage(role, text) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("chat-message");
     messageElement.classList.add(role === "user" ? "user-message" : "bot-message");
-
     messageElement.innerHTML = text;
-
     chatContainer.appendChild(messageElement);
-    chatContainer.scrollTop = chatContainer.scrollHeight; // Rolar para baixo automaticamente
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// Função para criar os botões (recebe o estado atual do menu)
-function criarBotoes(frasesMenu) {
+function criarBotoes(opcoes) {
     const container = document.getElementById("botoes");
-    container.innerHTML = ""; // Limpa os botões existentes
-
-    //isso é para tirar o espaco branco
-    const maximo = frasesMenu.length;
-    console.log(maximo);
-    const frasesUteis = frasesMenu.slice(0, maximo-1);
-    console.log(frasesUteis);
-
-    frasesUteis.forEach(opcao => {
+    container.innerHTML = "";
+    opcoes.forEach(textoDaOpcao => {
         const button = document.createElement("button");
         button.classList.add("botao-menu");
-        button.textContent = opcao.texto;
-        
-        button.addEventListener("click", () => run(opcao.texto));
+        button.textContent = textoDaOpcao;
+        button.addEventListener("click", () => run(textoDaOpcao));
         container.appendChild(button);
     });
 }
-

@@ -103,4 +103,37 @@ body {
     }
 }
 
+
+/* Loading para resposta do chatbot */
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff; 
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1.5s linear infinite;
+}
+
+.loading-text {
+  color: #555;
+  font-size: 1em;
+  font-style: italic;
+}
+
+/* Animação  pro círculo girar */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Para telas maiores que 1024px (PC) - Não precisa de ajustes específicos aqui, pois já está bom */
