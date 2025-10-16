@@ -1,0 +1,139 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    min-height: 95vh; /* Garante que o body ocupe toda a altura da tela */
+  }
+
+.container {
+    margin: 10px;
+    padding: 10px;
+    border: 4px solid #003869;
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 1000px; /* Define um máximo para telas maiores */
+    width: 90%; /* Ocupa toda largura disponível por padrão */
+    height: 90vh;
+    background-color: rgb(160, 255, 255);
+}
+
+.chat-container {
+    height: 550px;
+    overflow-y: auto;
+    border: 1px solid #003869;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ocupa toda largura disponível por padrão */
+    background-color: azure;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+}
+
+.user-message {
+    align-self: flex-end;
+    color: blue;
+    background-color: #c5d549;
+    border-radius: 10px 0 10px 10px;
+    padding: 8px 12px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.bot-message {
+    text-align: left;
+    color: rgb(0, 0, 0);
+    background-color: #87d2f8;
+    border-radius: 0 10px 10px 10px;
+    padding: 8px 12px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+/* Botoes */
+#botoes button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#botoes button:hover {
+    background-color: #45a049;
+}
+
+/* Media Queries para tornar responsivo */
+
+/* Para telas menores que 768px (celular) */
+@media (max-width: 767px) {
+    .container {
+        width: calc(100% - 20px); /* Remove margem da lateral */
+        max-width: none; /* Não limita mais em telas menores */
+        margin: 10px 0;
+    }
+    .chat-container {
+        height: 400px; /* Altura menor para celular */
+    }
+
+    #botoes button{
+        padding: 5px 10px;
+        margin: 3px;
+    }
+}
+
+/* Para telas entre 768px e 1023px (tablet) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        width: 90%; /* Adapta ao tablet*/
+         margin: 10px;
+    }
+    .chat-container {
+        height: 450px; /* Altura ajustada para tablet */
+    }
+}
+
+
+/* Loading para resposta do chatbot */
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff; 
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1.5s linear infinite;
+}
+
+.loading-text {
+  color: #555;
+  font-size: 1em;
+  font-style: italic;
+}
+
+/* Animação  pro círculo girar */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Para telas maiores que 1024px (PC) - Não precisa de ajustes específicos aqui, pois já está bom */
